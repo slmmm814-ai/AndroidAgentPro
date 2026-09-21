@@ -36,6 +36,8 @@ class AgentAccessibilityService : AccessibilityService() {
         instance = this
         connected = true
 
+        BridgeServer.getInstance(applicationContext).start()
+
         Log.i(TAG, "Accessibility service connected")
     }
 
@@ -60,6 +62,8 @@ class AgentAccessibilityService : AccessibilityService() {
         if (instance === this) {
             instance = null
         }
+
+        BridgeServer.getInstance(applicationContext).stop()
 
         Log.i(TAG, "Accessibility service destroyed")
 
