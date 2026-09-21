@@ -27,7 +27,7 @@ class BridgeServer(
         private const val MAX_HEADER_BYTES = 16 * 1024
         private const val MAX_BODY_BYTES = 2 * 1024 * 1024
         private const val SOCKET_TIMEOUT_MS = 10_000
-        private const val GESTURE_TIMEOUT_MS = 5_000
+        private const val GESTURE_TIMEOUT_MS = 5_000L
         private const val SERVER_BACKLOG = 16
         private const val WORKER_COUNT = 4
 
