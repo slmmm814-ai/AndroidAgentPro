@@ -36,6 +36,8 @@ class AgentAccessibilityService : AccessibilityService() {
         instance = this
         connected = true
 
+        ScreenshotEngine.install(this)
+
         BridgeServer.getInstance(applicationContext).start()
 
         Log.i(TAG, "Accessibility service connected")
@@ -62,6 +64,8 @@ class AgentAccessibilityService : AccessibilityService() {
         if (instance === this) {
             instance = null
         }
+
+        ScreenshotEngine.clear(this)
 
         BridgeServer.getInstance(applicationContext).stop()
 
