@@ -7,11 +7,11 @@
 ## 1. الحالة الحالية
 
 - **آخر تحديث:** 2026-09-21
-- **المرحلة الحالية:** Phase 3 — Verifier
+- **المرحلة الحالية:** Phase 4 — Safe Execution
 - **الحالة:** مكتملة — OWNER_ACCEPT
-- **البند النشط:** Phase 3 — Verifier
-- **آخر حالة مؤكدة في Git:** `d68077e`
-- **آخر وسم مكتمل:** `phase3-complete`
+- **البند النشط:** Phase 4 — Safe Execution
+- **آخر حالة مؤكدة في Git:** `820ca8e`
+- **آخر وسم مكتمل:** `phase4-complete`
 
 ## 2. قرارات المالك
 
@@ -40,7 +40,7 @@
 | Phase 1 — FSM | مكتملة | `phase1-complete` |
 | Phase 2 — Meta-Planner | مكتملة | `phase2-complete` |
 | Phase 3 — Verifier | مكتملة — OWNER_ACCEPT | `phase3-complete` |
-| Phase 4 | لم تبدأ | — |
+| Phase 4 — Safe Execution | مكتملة — OWNER_ACCEPT | `phase4-complete` |
 | Phase 5 | لم تبدأ | — |
 | Phase 6 | لم تبدأ | — |
 | Phase 7 | لم تبدأ | — |
@@ -66,20 +66,20 @@
 
 ## 8. البند الحالي
 
-**Phase 3 — Verifier**
+**Phase 4 — Safe Execution**
 
 - الحالة: مكتملة — OWNER_ACCEPT
-- الوسم: `phase3-complete`
-- الاختبارات: Phase 1 = 10/10، Phase 2 = 14/14، Phase 3 = 33/33، Breaker = 6/6
+- الوسم: `phase4-complete`
+- الاختبارات: Phase 1 = 10/10، Phase 2 = 14/14، Phase 3 = 33/33، Phase 4 = 19/19، Breaker Phase 3 = 6/6، Breaker Phase 4 = 8/8، Regression = 90/90
 - Phase 0 Health Check: 50/50 PASS
 - GitHub Actions Android Build: PASS
 
-تم تحقيق هدف المرحلة: طبقة تحقق ذات ست طبقات مع اختبارات مستقلة واختبارات Breaker ضد false-success، مع الحفاظ على واجهات Phase 1 وPhase 2 وعدم إدخال ميزات خارج نطاق المرحلة.
+تم تحقيق هدف المرحلة: طبقة تنفيذ آمنة مع عزل المسارات، وقائمة أوامر مسموحة، وكتابة ذرية، وإصلاح تلقائي محدود، وحدود زمنية وذاكرة ومعالج، مع اختبارات مستقلة واختبارات Breaker، والحفاظ على مراحل المشروع السابقة.
 
 ## 9. قواعد الاستمرار
 
 1. لا نعدل Phase 0–2 دون regression مثبت بالدليل.
-2. لا ننتقل إلى Phase 4 قبل إغلاق معايير قبول Phase 3.
+2. لا ننتقل إلى Phase 5 قبل إغلاق معايير قبول Phase 4.
 3. لا نعلن نجاح أي اختبار دون مخرجات فعلية.
 4. قبل أي commit جديد يجب تشغيل:
    - اختبارات Phase 1
@@ -106,6 +106,6 @@
 1. قراءة `STATE.md`.
 2. فحص `git status`.
 3. قراءة آخر commits والوسوم.
-4. التأكد من أن Phase 0–2 ما زالت سليمة.
-5. متابعة Phase 3 فقط.
+4. التأكد من أن Phase 0–4 ما زالت سليمة.
+5. متابعة Phase 4 فقط.
 6. عدم افتراض نجاح أي خطوة دون دليل.
