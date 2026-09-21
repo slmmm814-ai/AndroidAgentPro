@@ -278,6 +278,51 @@ class TestPhase3Verifier(unittest.TestCase):
         self.assertFalse(report.layers[0].passed)
 
 
+class TestPhase3SuccessTypeHardening(unittest.TestCase):
+    def setUp(self) -> None:
+        self.verifier = SixLayerVerifier()
+
+    def test_action_success_integer_one_is_rejected(self) -> None:
+        request = VerificationRequest(
+            action=AgentAction(ActionType.TAP, {"x": 10, "y": 10}),
+            action_result=ActionResult(success=1, operation_id=1),
+            evidence={
+                "operation_id": 1,
+                "verified": True,
+            },
+            goal_result=GoalResult(
+                success=True,
+                reason="goal reached",
+            ),
+        )
+
+        report = self.verifier.verify(request)
+
+        self.assertFalse(report.accepted)
+        self.assertEqual(report.decision, VerificationDecision.REJECT)
+        self.assertEqual(report.error_code, "INVALID_ACTION_SUCCESS")
+
+    def test_goal_success_integer_one_is_rejected(self) -> None:
+        request = VerificationRequest(
+            action=AgentAction(ActionType.TAP, {"x": 10, "y": 10}),
+            action_result=ActionResult(success=True, operation_id=1),
+            evidence={
+                "operation_id": 1,
+                "verified": True,
+            },
+            goal_result=GoalResult(
+                success=1,
+                reason="goal reached",
+            ),
+        )
+
+        report = self.verifier.verify(request)
+
+        self.assertFalse(report.accepted)
+        self.assertEqual(report.decision, VerificationDecision.REJECT)
+        self.assertEqual(report.error_code, "INVALID_GOAL_SUCCESS")
+
+
 if __name__ == "__main__":
     unittest.main()
 

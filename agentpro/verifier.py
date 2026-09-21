@@ -205,6 +205,14 @@ class SixLayerVerifier:
     def _action_result_layer(self, request: VerificationRequest) -> LayerResult:
         result = request.action_result
 
+        if not isinstance(result.success, bool):
+            return LayerResult(
+                VerificationLayer.ACTION_RESULT,
+                False,
+                "INVALID_ACTION_SUCCESS",
+                "action result success must be a boolean",
+            )
+
         if not result.success:
             return LayerResult(
                 VerificationLayer.ACTION_RESULT,
@@ -345,6 +353,14 @@ class SixLayerVerifier:
                 False,
                 "MISSING_GOAL_RESULT",
                 "goal verification result is required",
+            )
+
+        if not isinstance(goal_result.success, bool):
+            return LayerResult(
+                VerificationLayer.GOAL,
+                False,
+                "INVALID_GOAL_SUCCESS",
+                "goal result success must be a boolean",
             )
 
         if not goal_result.success:
