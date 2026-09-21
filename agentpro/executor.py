@@ -309,6 +309,18 @@ class AgentExecutor:
                         reason=verification.reason,
                     )
 
+                    if not verification.success:
+                        try:
+                            self._transition(AgentState.PLAN)
+                        except StateLimitExceededError as exc:
+                            return self._fail(str(exc))
+                        self._trace(
+                            "plan_continuation",
+                            remaining_actions=len(self.context.plan)
+                            - self.context.action_count,
+                        )
+                        continue
+
                     if verification.success:
                         self._transition(AgentState.VERIFY_GOAL)
 
