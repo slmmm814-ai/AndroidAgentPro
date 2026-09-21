@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AgentBridge</string>
+    <string name="accessibility_description">يقرأ أوامر النقر من ملف لتشغيل الوكيل</string>
+</resources>
