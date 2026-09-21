@@ -8,10 +8,10 @@
 
 - **آخر تحديث:** 2026-09-21
 - **المرحلة الحالية:** Phase 3 — Verifier
-- **الحالة:** قيد التنفيذ
+- **الحالة:** مكتملة — OWNER_ACCEPT
 - **البند النشط:** Phase 3 — Verifier
-- **آخر حالة مؤكدة في Git:** `1fb0249`
-- **آخر وسم مكتمل:** `phase2-complete`
+- **آخر حالة مؤكدة في Git:** `d68077e`
+- **آخر وسم مكتمل:** `phase3-complete`
 
 ## 2. قرارات المالك
 
@@ -39,7 +39,7 @@
 | Phase 0 — Bridge | مكتملة | `phase0-complete` |
 | Phase 1 — FSM | مكتملة | `phase1-complete` |
 | Phase 2 — Meta-Planner | مكتملة | `phase2-complete` |
-| Phase 3 — Verifier | قيد التنفيذ | — |
+| Phase 3 — Verifier | مكتملة — OWNER_ACCEPT | `phase3-complete` |
 | Phase 4 | لم تبدأ | — |
 | Phase 5 | لم تبدأ | — |
 | Phase 6 | لم تبدأ | — |
@@ -68,7 +68,13 @@
 
 **Phase 3 — Verifier**
 
-الهدف الحالي هو بناء طبقة التحقق ذات الست طبقات مع اختبارات مستقلة، مع الحفاظ على واجهات Phase 1 وPhase 2 وعدم إدخال ميزات خارج نطاق المرحلة.
+- الحالة: مكتملة — OWNER_ACCEPT
+- الوسم: `phase3-complete`
+- الاختبارات: Phase 1 = 10/10، Phase 2 = 14/14، Phase 3 = 33/33، Breaker = 6/6
+- Phase 0 Health Check: 50/50 PASS
+- GitHub Actions Android Build: PASS
+
+تم تحقيق هدف المرحلة: طبقة تحقق ذات ست طبقات مع اختبارات مستقلة واختبارات Breaker ضد false-success، مع الحفاظ على واجهات Phase 1 وPhase 2 وعدم إدخال ميزات خارج نطاق المرحلة.
 
 ## 9. قواعد الاستمرار
 
