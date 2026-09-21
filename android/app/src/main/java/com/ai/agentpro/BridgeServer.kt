@@ -169,9 +169,6 @@ class BridgeServer(
             serverSocket?.isClosed == false
     }
 
-    fun getAuthenticationToken(): String {
-        return authenticationToken
-    }
 
     private fun acceptLoop() {
         while (running.get()) {
