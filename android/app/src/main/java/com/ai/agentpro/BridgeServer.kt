@@ -390,6 +390,8 @@ class BridgeServer(
                     }
                 }
 
+                "screenshot" -> executeScreenshot(request)
+
                 "tap" -> executeTap(request)
 
                 "back" -> executeBack(request)
@@ -422,6 +424,91 @@ class BridgeServer(
                 )
             )
         }
+    }
+
+    private fun executeScreenshot(
+        request: BridgeProtocol.BridgeRequest
+    ): CommandResponse {
+        val accessibility =
+            AgentAccessibilityService.getInstance()
+
+        if (accessibility == null ||
+            !accessibility.isConnected()
+        ) {
+            return CommandResponse.failure(
+                503,
+                BridgeProtocol.error(
+                    request.requestId,
+                    "ACCESSIBILITY_NOT_CONNECTED",
+                    "Accessibility service is not connected"
+                )
+            )
+        }
+
+        val engine = ScreenshotEngine.getInstance()
+
+        if (engine == null) {
+            return CommandResponse.failure(
+                503,
+                BridgeProtocol.error(
+                    request.requestId,
+                    "SCREENSHOT_ENGINE_NOT_READY",
+                    "Screenshot engine is not initialized"
+                )
+            )
+        }
+
+        val result = engine.captureDefaultDisplay()
+
+        if (!result.success || result.base64 == null) {
+            return CommandResponse.failure(
+                503,
+                BridgeProtocol.error(
+                    request.requestId,
+                    result.code ?: "SCREENSHOT_FAILED",
+                    result.message ?: "Screenshot capture failed"
+                )
+            )
+        }
+
+        return CommandResponse.success(
+            BridgeProtocol.success(
+                request.requestId,
+                JSONObject()
+                    .put(
+                        "operation_id",
+                        result.operationId
+                    )
+                    .put(
+                        "width",
+                        result.width
+                    )
+                    .put(
+                        "height",
+                        result.height
+                    )
+                    .put(
+                        "format",
+                        result.format ?: "jpeg"
+                    )
+                    .put(
+                        "quality",
+                        result.quality ?: 85
+                    )
+                    .put(
+                        "byte_count",
+                        result.byteCount
+                    )
+                    .put(
+                        "base64",
+                        result.base64
+                    )
+                    .put(
+                        "elapsed_ms",
+                        result.elapsedMs
+                    )
+            )
+        )
     }
 
     private fun executeTap(
